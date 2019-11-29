@@ -8,28 +8,35 @@ class App {
 
   constructor() {
     this.app = express();
-    this.server = http.Server(this.app);
+    this.server = http.createServer(this.app);
 
-    this.socket();
+
     this.middleware();
     this.routes();
 
     this.connectedUsers = {};
+
+    //this.socket();
 
   }
 
   socket() {
     this.io = io(this.server);
 
+    console.log('teste ->');
+
     this.io.on('connection', socket => {
 
-      const { user_id } = socket.handshake.query;
+      console.log('New connection', socket)
 
-      this.connectedUsers[user_id] = socket.id;
+      // const { user_id } = socket.handshake.query;
 
-      this.io.on('disconnect', () => {
-        delete this.connectedUsers[user_id];
-      });
+
+      // this.connectedUsers[user_id] = socket.id;
+
+      // this.io.on('disconnect', () => {
+      //   delete this.connectedUsers[user_id];
+      // });
     });
   }
 
@@ -39,7 +46,7 @@ class App {
     this.app.use((req, res, next) => {
       req.io = this.io;
       req.connectedUsers = this.connectedUsers;
-
+      console.log(req.connectedUsers);
       next();
     });
 

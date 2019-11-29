@@ -3,11 +3,14 @@
 class HomeController {
 
   async store(req, res) {
-    return res
-      .status(200)
-      .json({
-        mensagem: 'Sucesso !!'
-      });
+
+    req.io.emit('notification', { mensagem: 'on-line' });
+
+    // return res
+    //   .status(200)
+    //   .json({
+    //     mensagem: 'Sucesso !!'
+    //   });
 
   }
 
