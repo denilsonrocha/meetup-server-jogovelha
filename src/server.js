@@ -10,38 +10,35 @@ app.get('/', (req, res) => {
 
 })
 
-let messages = [];
-
-let matriz = [
-  ["a", "y", "y"],
-  ["y", "y", "y"],
-  ["y", "y", "y"],
-]
-
 io.on('connection', (socket) => {
 
   console.log('New connection', socket.id);
 
-  io.sockets.emit('receivedMessage', matriz);
+  //io.sockets.emit('receivedMessage', matriz);
 
-  socket.on('sendMessage', data => {
+  socket.on('sendTabuleiro', data => {
     console.log(data);
-    messages.push(data);
 
-    //io.sockets.emit('sendMessage', data);
-    socket.broadcast.emit('receivedMessage', data);
+    socket.broadcast.emit('recebeTabuleiro', data);
 
   });
 
+  socket.on('sendJogadorAtual', jogador => {
+
+    console.log(jogador);
+
+    socket.broadcast.emit('recebeJogadorAtual', jogador);
+
+  })
+
 })
 
-http.listen(3334, function () {
+http.listen(3333, function () {
 
-  console.log('listening on port 3334')
+  console.log('listening on port 3333')
 
 })
 
 
-// import app from './app';
 
 // app.listen(3334);
