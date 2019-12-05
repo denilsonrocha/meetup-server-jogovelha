@@ -1,8 +1,16 @@
-const app = require('express')()
+const express = require('express');
 
-const http = require('http').createServer(app)
+const app = express();
+
+const http = require('http').createServer(app);
 
 const io = require('socket.io')(http)
+
+const cors = require('cors');
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
 
@@ -29,16 +37,14 @@ io.on('connection', (socket) => {
 
     socket.broadcast.emit('recebeJogadorAtual', jogador);
 
-  })
-
-})
+  });
+});
 
 http.listen(3333, function () {
 
   console.log('listening on port 3333')
 
-})
+});
 
 
 
-// app.listen(3334);
