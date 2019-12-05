@@ -5,7 +5,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http)
 const cors = require('cors');
 
-const routes = require('./routes');
+import routes from './routes';
 
 app.use(cors());
 app.use(express.json());
@@ -13,35 +13,28 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
 
-// app.get('/', (req, res) => {
 
-//   res.json({ nome: 'teste' })
+io.on('connection', (socket) => {
 
-// })
+  console.log('New connection', socket.id);
 
-routes.
+  //io.sockets.emit('receivedMessage', matriz);
 
-  io.on('connection', (socket) => {
+  socket.on('sendTabuleiro', data => {
+    console.log(data);
 
-    console.log('New connection', socket.id);
+    socket.broadcast.emit('recebeTabuleiro', data);
 
-    //io.sockets.emit('receivedMessage', matriz);
-
-    socket.on('sendTabuleiro', data => {
-      console.log(data);
-
-      socket.broadcast.emit('recebeTabuleiro', data);
-
-    });
-
-    socket.on('sendJogadorAtual', jogador => {
-
-      console.log(jogador);
-
-      socket.broadcast.emit('recebeJogadorAtual', jogador);
-
-    });
   });
+
+  socket.on('sendJogadorAtual', jogador => {
+
+    console.log(jogador);
+
+    socket.broadcast.emit('recebeJogadorAtual', jogador);
+
+  });
+});
 
 http.listen(process.env.PORT || 3333, function () {
 
