@@ -1,13 +1,12 @@
 
-
 class HomeController {
 
-  async store(req, res) {
+  async store(req, res, next) {
 
     return res
       .status(200)
       .json({
-        mensagem: 'Sucesso !!'
+        mensagem: 'rota import !!'
       });
 
   }

@@ -4,8 +4,8 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http)
 const cors = require('cors');
+const routes = require('./routes');
 
-import routes from './routes';
 
 app.use(cors());
 app.use(express.json());
@@ -13,6 +13,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
 
+
+// app.get('/', (req, res) => {
+//   return res.json({ message: "sucesso." })
+// })
 
 io.on('connection', (socket) => {
 
@@ -36,9 +40,9 @@ io.on('connection', (socket) => {
   });
 });
 
-http.listen(process.env.PORT || 3333, function () {
+http.listen(process.env.PORT || 3030, function () {
 
-  console.log('listening on port 3333')
+  console.log('listening on port 3030')
 
 });
 
