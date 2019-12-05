@@ -11,12 +11,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(routes);
+//app.use(routes);
 
 
-// app.get('/', (req, res) => {
-//   return res.json({ message: "sucesso." })
-// })
+app.get('/', (req, res) => {
+  return res.json({ message: "sucesso." })
+})
 
 io.on('connection', (socket) => {
 
