@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require('express');
 
 const app = express();
@@ -40,7 +42,7 @@ io.on('connection', (socket) => {
   });
 });
 
-http.listen(3333, function () {
+http.listen(process.env.PORT || 3333, function () {
 
   console.log('listening on port 3333')
 
